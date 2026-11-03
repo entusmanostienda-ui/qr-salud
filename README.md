@@ -41,3 +41,22 @@ Despliega el servicio Node en un proveedor que permita HTTPS y almacenamiento pe
 
 ## Datos médicos
 Usa únicamente datos ficticios en pruebas. No cargues historiales, recetas ni boletas reales hasta completar revisión técnica, seguridad, privacidad y validación legal.
+
+
+## Actualización: QR personal y aplicación instalable (PWA)
+
+Esta versión incorpora:
+- Instalación desde el navegador mediante el manifiesto PWA y el service worker.
+- Íconos de aplicación para 192 y 512 px.
+- Menú **Mi código QR** con descarga del código personal.
+- Página pública `/emergency/:token` que no requiere iniciar sesión y muestra únicamente los campos seleccionados y autorizados en **Mi perfil**.
+- El QR permanece desactivado hasta que el usuario marque expresamente la autorización.
+
+### Publicación en Render
+1. Reemplaza los archivos del repositorio con el contenido de esta carpeta y haz commit/push a la rama conectada a Render.
+2. Render instalará la dependencia `qrcode` durante el despliegue. No se requiere modificar `schema.sql` ni ejecutar una migración SQL adicional.
+3. Espera a que el servicio aparezca como **Live**.
+4. Entra a QR Salud, abre **Mi perfil**, selecciona qué datos deseas compartir y activa la casilla de autorización. Guarda.
+5. Abre **Mi código QR** para ver o descargar el QR. Escanéalo con otro teléfono para comprobar la página pública.
+
+**Privacidad y límites:** el QR es un enlace público con un token aleatorio; cualquier persona que tenga el QR/enlace puede ver los campos autorizados. No incluyas datos médicos reales en esta demo. El almacenamiento de archivos sigue dependiendo del disco del servicio; en Render Free los archivos locales pueden no ser persistentes entre despliegues/reinicios. La PWA guarda solo la carcasa de la aplicación; no almacena en caché respuestas privadas de la API. Para producción se requiere revisión de seguridad, privacidad, consentimiento, respaldo y almacenamiento persistente.
